@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OLTRE Mühendislik & Mimarlık</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --dark: #141414;
+    --mid: #2a2a2a;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --white: #f5f3ef;
+    --muted: #999;
+    --accent: #c9184a;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--white);
+    color: var(--black);
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 22px 60px;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(12px);
+  }
+  .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px; font-weight: 700;
+    color: var(--gold); letter-spacing: 6px;
+  }
+  .nav-links { display:flex; gap:40px; }
+  .nav-links a {
+    color: #ddd; text-decoration:none;
+    font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
+    transition: color .3s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* ── HERO ── */
+  .hero {
+    height: 100vh; position: relative; overflow: hidden;
+    display:flex; align-items:center; justify-content:center;
+    background: var(--black);
+  }
+  .hero-bg {
+    position:absolute; inset:0;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1208 50%, #0a0a0a 100%);
+  }
+  .hero-grid {
+    position:absolute; inset:0; opacity:0.06;
+    background-image: linear-gradient(var(--gold) 1px, transparent 1px),
+                      linear-gradient(90deg, var(--gold) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-content {
+    position:relative; text-align:center; max-width:900px; padding:0 40px;
+    animation: fadeUp 1.2s ease both;
+  }
+  @keyframes fadeUp {
+    from { opacity:0; transform: translateY(40px); }
+    to   { opacity:1; transform: translateY(0); }
+  }
+  .hero-tag {
+    display:inline-block; margin-bottom:28px;
+    font-size:11px; letter-spacing:5px; text-transform:uppercase;
+    color: var(--gold); border: 1px solid rgba(201,168,76,0.4);
+    padding: 8px 24px; border-radius:2px;
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(52px, 8vw, 100px);
+    font-weight: 300; line-height: 1.0;
+    color: var(--white); letter-spacing: -1px;
+    margin-bottom: 30px;
+  }
+  .hero h1 em { color: var(--gold); font-style: italic; }
+  .hero p {
+    font-size: 16px; line-height: 1.9;
+    color: rgba(245,243,239,0.65); max-width: 600px; margin: 0 auto 48px;
+  }
+  .hero-cta {
+    display:inline-flex; align-items:center; gap:12px;
+    background: var(--gold); color: var(--black);
+    padding: 16px 40px; text-decoration:none;
+    font-size: 13px; font-weight: 500; letter-spacing:2px; text-transform:uppercase;
+    transition: all .3s;
+  }
+  .hero-cta:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+  /* ── STATS BAR ── */
+  .stats {
+    background: var(--dark); color: var(--white);
+    display:grid; grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid rgba(201,168,76,0.2);
+  }
+  .stat-item {
+    padding: 44px 40px;
+    border-right: 1px solid rgba(201,168,76,0.1);
+    text-align:center;
+  }
+  .stat-item:last-child { border-right:none; }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px; font-weight: 600; color: var(--gold);
+    display:block; line-height:1;
+  }
+  .stat-label { font-size: 12px; letter-spacing:2px; text-transform:uppercase; color: var(--muted); margin-top:8px; display:block; }
+
+  /* ── SECTION ── */
+  section { padding: 100px 60px; }
+  .section-label {
+    font-size:11px; letter-spacing:5px; text-transform:uppercase;
+    color: var(--gold); margin-bottom:16px; display:block;
+  }
+  h2.section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 5vw, 64px); font-weight: 300;
+    line-height:1.1; margin-bottom:24px;
+  }
+  .section-subtitle {
+    font-size:16px; line-height:1.9; color:#555; max-width:600px;
+  }
+
+  /* ── MISYON ── */
+  .mission { background: var(--white); }
+  .mission-grid {
+    display:grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items:center; max-width:1200px; margin:0 auto;
+  }
+  .mission-visual {
+    position:relative; height:500px;
+    background: linear-gradient(135deg, #1a1208, #2a1e0a);
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+  }
+  .mission-visual::before {
+    content:''; position:absolute; inset:0;
+    background: repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(201,168,76,0.03) 20px, rgba(201,168,76,0.03) 21px);
+  }
+  .mission-visual-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 120px; color: rgba(201,168,76,0.12); font-weight:700;
+    position:absolute; user-select:none;
+  }
+  .mission-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-style:italic;
+    color: var(--gold-light); text-align:center; position:relative; z-index:1;
+    padding:40px; line-height:1.6;
+  }
+  .values-list { margin-top:40px; }
+  .value-item {
+    display:flex; gap:20px; align-items:flex-start;
+    padding: 20px 0; border-bottom: 1px solid #eee;
+  }
+  .value-icon {
+    width:44px; height:44px; flex-shrink:0;
+    background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.3);
+    display:flex; align-items:center; justify-content:center;
+    font-size:18px;
+  }
+  .value-item h4 { font-size:15px; font-weight:500; margin-bottom:4px; }
+  .value-item p { font-size:14px; color:#666; line-height:1.7; }
+
+  /* ── HİZMETLER ── */
+  .services { background: #f8f6f2; }
+  .services-header { text-align:center; max-width:700px; margin:0 auto 70px; }
+  .services-grid {
+    display:grid; grid-template-columns: repeat(3, 1fr);
+    gap:2px; max-width:1200px; margin:0 auto;
+  }
+  .service-card {
+    background: var(--white); padding:48px 36px;
+    position:relative; overflow:hidden;
+    transition: all .4s;
+    border-bottom: 3px solid transparent;
+  }
+  .service-card:hover { transform:translateY(-6px); border-bottom-color: var(--gold); }
+  .service-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size:64px; font-weight:700;
+    color: rgba(201,168,76,0.12); position:absolute;
+    top:20px; right:24px; line-height:1;
+  }
+  .service-icon { font-size:32px; margin-bottom:20px; }
+  .service-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size:24px; font-weight:600; margin-bottom:14px;
+  }
+  .service-card p { font-size:14px; color:#666; line-height:1.8; }
+
+  /* ── EKİP / TARİHÇE ── */
+  .team { background: var(--dark); color: var(--white); }
+  .team .section-subtitle { color:#aaa; }
+  .team-grid {
+    display:grid; grid-template-columns: repeat(3, 1fr);
+    gap:32px; max-width:1100px; margin:60px auto 0;
+  }
+  .team-card { position:relative; overflow:hidden; }
+  .team-photo {
+    height:320px;
+    background: linear-gradient(160deg, #2a2a2a, #1a1a1a);
+    display:flex; align-items:center; justify-content:center;
+    font-size:64px;
+    border-bottom: 3px solid var(--gold);
+  }
+  .team-info { padding:24px 0; }
+  .team-info h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size:22px; margin-bottom:4px;
+  }
+  .team-info p { font-size:13px; color: var(--gold); letter-spacing:1px; text-transform:uppercase; }
+
+  /* ── TARİHÇE ZAMANÇİZELGESİ ── */
+  .timeline { background: var(--white); }
+  .timeline-items { max-width:800px; margin:60px auto 0; position:relative; }
+  .timeline-items::before {
+    content:''; position:absolute; left:50%; top:0; bottom:0;
+    width:1px; background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+    transform:translateX(-50%);
+  }
+  .tl-item {
+    display:flex; gap:40px; margin-bottom:60px; align-items:flex-start;
+  }
+  .tl-item:nth-child(even) { flex-direction:row-reverse; }
+  .tl-content {
+    flex:1;
+    background: #f8f6f2; padding:32px;
+    border-left: 3px solid var(--gold);
+  }
+  .tl-item:nth-child(even) .tl-content {
+    border-left:none; border-right:3px solid var(--gold); text-align:right;
+  }
+  .tl-year {
+    flex:0 0 80px; text-align:center;
+    padding-top:28px;
+  }
+  .tl-year span {
+    font-family: 'Cormorant Garamond', serif;
+    font-size:22px; font-weight:600; color:var(--gold);
+    background:var(--white);
+    display:inline-block; padding:4px 8px;
+    border: 1px solid rgba(201,168,76,0.3);
+  }
+  .tl-content h3 { font-size:17px; font-weight:500; margin-bottom:8px; }
+  .tl-content p { font-size:14px; color:#666; line-height:1.7; }
+
+  /* ── SSS ── */
+  .faq { background: #f8f6f2; }
+  .faq-items { max-width:800px; margin:60px auto 0; }
+  .faq-item {
+    border-bottom: 1px solid #ddd;
+    padding: 28px 0;
+  }
+  .faq-q {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px; font-weight:600;
+    display:flex; justify-content:space-between; align-items:center;
+    cursor:pointer;
+  }
+  .faq-q::after { content:'＋'; color:var(--gold); font-size:20px; }
+  .faq-a {
+    font-size:15px; color:#666; line-height:1.8;
+    margin-top:16px; max-width:700px;
+  }
+
+  /* ── CTA ── */
+  .cta-section {
+    background: var(--dark);
+    text-align:center; padding:100px 60px;
+    position:relative; overflow:hidden;
+  }
+  .cta-section::before {
+    content:''; position:absolute; inset:0;
+    background: radial-gradient(ellipse at center, rgba(201,168,76,0.08) 0%, transparent 70%);
+  }
+  .cta-section h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size:clamp(36px,5vw,64px); color:var(--white);
+    font-weight:300; margin-bottom:20px; position:relative;
+  }
+  .cta-section p { color:#aaa; font-size:16px; margin-bottom:48px; position:relative; }
+  .btn-gold {
+    display:inline-block; background:var(--gold); color:var(--black);
+    padding:18px 48px; text-decoration:none;
+    font-size:13px; font-weight:500; letter-spacing:2px; text-transform:uppercase;
+    transition:all .3s; position:relative;
+  }
+  .btn-gold:hover { background:var(--gold-light); transform:translateY(-3px); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #050505; color: #777;
+    padding: 60px; text-align:center;
+    border-top: 1px solid rgba(201,168,76,0.15);
+  }
+  footer .logo { font-size:32px; display:block; margin-bottom:20px; }
+  footer p { font-size:13px; line-height:2; }
+  footer a { color:var(--gold); text-decoration:none; }
+  .footer-divider { width:60px; height:1px; background:var(--gold); margin:30px auto; }
+
+  /* ── PAGE SECTIONS (for content reference) ── */
+  .page-section {
+    max-width:1100px; margin:0 auto;
+  }
+
+  @media (max-width:768px) {
+    nav { padding:18px 24px; }
+    .nav-links { gap:20px; }
+    section { padding:70px 24px; }
+    .mission-grid, .services-grid, .team-grid, .stats { grid-template-columns:1fr; }
+    .hero h1 { font-size:48px; }
+    .tl-item, .tl-item:nth-child(even) { flex-direction:column; }
+    .timeline-items::before { left:20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="logo">OLTRE</span>
+  <div class="nav-links">
+    <a href="#anasayfa">Ana Sayfa</a>
+    <a href="#tarihce">Tarihçe</a>
+    <a href="#ekip">Ekip</a>
+    <a href="#sss">SSS</a>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════
+     ANA SAYFA
+═══════════════════════════════════════════ -->
+
+<!-- HERO — Şu an boş kalan üst alan için -->
+<section class="hero" id="anasayfa">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <span class="hero-tag">Mühendislik & Mimarlık</span>
+    <h1>Tasarımın<br>Ötesine <em>Geçin</em></h1>
+    <p>Mimari tasarımdan anahtar teslim inşaata; statik analizden proje koordinasyonuna kadar bütüncül mühendislik çözümleri sunuyoruz.</p>
+    <a href="#cta" class="hero-cta">Teklif Alın →</a>
+  </div>
+</section>
+
+<!-- İSTATİSTİKLER -->
+<div class="stats">
+  <div class="stat-item">
+    <span class="stat-num">150+</span>
+    <span class="stat-label">Tamamlanan Proje</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">12</span>
+    <span class="stat-label">Yıllık Deneyim</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">4</span>
+    <span class="stat-label">Hizmet Alanı</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">%98</span>
+    <span class="stat-label">Müşteri Memnuniyeti</span>
+  </div>
+</div>
+
+<!-- MİSYON -->
+<section class="mission" id="misyon">
+  <div class="mission-grid">
+    <div>
+      <span class="section-label">Misyonumuz</span>
+      <h2 class="section-title">Güvenli, Ekonomik,<br>Zamanında.</h2>
+      <p class="section-subtitle">OLTRE olarak mühendislik disiplinlerini bir araya getirerek güvenli, ekonomik ve uygulanabilir yapı çözümleri üretmeyi hedefliyoruz.</p>
+      <div class="values-list">
+        <div class="value-item">
+          <div class="value-icon">⚙️</div>
+          <div>
+            <h4>Teknik Doğruluk</h4>
+            <p>Her hesap, her çizim — standartlara uygun ve denetlenebilir.</p>
+          </div>
+        </div>
+        <div class="value-item">
+          <div class="value-icon">💬</div>
+          <div>
+            <h4>Şeffaf İletişim</h4>
+            <p>Projenizin her aşamasında sizi bilgilendiriyor, süreci birlikte yönetiyoruz.</p>
+          </div>
+        </div>
+        <div class="value-item">
+          <div class="value-icon">📅</div>
+          <div>
+            <h4>Zamanında Teslim</h4>
+            <p>İş programına bağlılık temel prensibimizdir. Sözümüz, taahhüdümüzdür.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mission-visual">
+      <span class="mission-visual-text">OLTRE</span>
+      <p class="mission-quote">"Mühendislik sadece hesap değildir; güveni inşa etmektir."</p>
+    </div>
+  </div>
+</section>
+
+<!-- HİZMETLER -->
+<section class="services" id="hizmetler">
+  <div class="services-header">
+    <span class="section-label">Hizmetlerimiz</span>
+    <h2 class="section-title">Ne Yapıyoruz?</h2>
+    <p class="section-subtitle">Dört temel alanda uzman ekibimizle projenizin başından sonuna yanınızdayız.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <span class="service-num">01</span>
+      <div class="service-icon">🏛️</div>
+      <h3>Mimari Tasarım & Ruhsat</h3>
+      <p>Konsept geliştirmeden ruhsat ve uygulama projelerine kadar tüm mimari süreçleri mevzuata uygun yönetiyoruz.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-num">02</span>
+      <div class="service-icon">📐</div>
+      <h3>Statik Analiz & Betonarme</h3>
+      <p>Betonarme ve çelik yapıların statik hesapları, performans kontrolleri ve uygulama projeleri standartlara uygun hazırlanır.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-num">03</span>
+      <div class="service-icon">🏗️</div>
+      <h3>Anahtar Teslim İnşaat</h3>
+      <p>Planlama aşamasından son imalata kadar kalite, maliyet ve süre kontrolüyle anahtar teslim gerçekleştiriyoruz.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-num">04</span>
+      <div class="service-icon">📋</div>
+      <h3>Proje Planlama & Koordinasyon</h3>
+      <p>İş programı, metraj, keşif ve saha koordinasyonunu entegre şekilde yöneterek projelerin zamanında ilerlemesini sağlıyoruz.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-num">05</span>
+      <div class="service-icon">🔍</div>
+      <h3>Yapı Denetimi & Raporlama</h3>
+      <p>Şantiye denetimleri, kalite kontrol ve resmi raporlama süreçlerini eksiksiz yürütüyoruz.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-num">06</span>
+      <div class="service-icon">📊</div>
+      <h3>Fizibilite & Danışmanlık</h3>
+      <p>Yatırım öncesi fizibilite analizi ve teknik danışmanlık hizmetleriyle doğru kararlar almanıza destek oluyoruz.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     TARİHÇE SAYFASI
+═══════════════════════════════════════════ -->
+<section class="timeline" id="tarihce" style="background:#f8f6f2">
+  <div class="page-section">
+    <span class="section-label">Tarihçe</span>
+    <h2 class="section-title">Yolculuğumuz</h2>
+    <p class="section-subtitle">Küçük bir ofisten bütüncül bir mühendislik firmasına uzanan hikâyemiz.</p>
+    <div class="timeline-items">
+      <div class="tl-item">
+        <div class="tl-content">
+          <h3>Kuruluş</h3>
+          <p>OLTRE Mühendislik & Mimarlık, Sancaktepe / İstanbul'da kuruldu. Statik proje ve ruhsat danışmanlığı hizmetleriyle ilk adımlarını attı.</p>
+        </div>
+        <div class="tl-year"><span>2012</span></div>
+        <div style="flex:1"></div>
+      </div>
+      <div class="tl-item">
+        <div style="flex:1"></div>
+        <div class="tl-year"><span>2015</span></div>
+        <div class="tl-content" style="border-left:none; border-right:3px solid var(--gold); text-align:right;">
+          <h3>Mimari Bölüm</h3>
+          <p>Mimari tasarım ve ruhsat projeleri bölümü kuruldu. Ekip 8 kişiye ulaştı, ilk konut projeleri tamamlandı.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-content">
+          <h3>Anahtar Teslim İnşaat</h3>
+          <p>İnşaat uygulama hizmetleri portföye eklendi. İlk anahtar teslim proje başarıyla teslim edildi.</p>
+        </div>
+        <div class="tl-year"><span>2018</span></div>
+        <div style="flex:1"></div>
+      </div>
+      <div class="tl-item">
+        <div style="flex:1"></div>
+        <div class="tl-year"><span>2021</span></div>
+        <div class="tl-content" style="border-left:none; border-right:3px solid var(--gold); text-align:right;">
+          <h3>Dijital Dönüşüm</h3>
+          <p>BIM tabanlı proje yönetimi ve dijital saha koordinasyonuna geçildi. Süreçler daha şeffaf ve ölçülebilir hale geldi.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-content">
+          <h3>Bugün — 150+ Proje</h3>
+          <p>150'den fazla tamamlanan proje, 4 hizmet alanı ve %98 müşteri memnuniyetiyle büyümeye devam ediyoruz.</p>
+        </div>
+        <div class="tl-year"><span>2024</span></div>
+        <div style="flex:1"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     EKİP SAYFASI
+═══════════════════════════════════════════ -->
+<section class="team" id="ekip">
+  <div class="page-section">
+    <span class="section-label">Ekibimiz</span>
+    <h2 class="section-title" style="color:var(--white)">Arkamızda Kim Var?</h2>
+    <p class="section-subtitle">Alanında uzman, deneyimli ve birbirine güvenen bir kadro.</p>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-photo">👷</div>
+        <div class="team-info">
+          <h3>Kurucu Ortak / Mimar</h3>
+          <p>Mimari Tasarım & Proje Yönetimi</p>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-photo">🏗️</div>
+        <div class="team-info">
+          <h3>İnşaat Mühendisi</h3>
+          <p>Statik Analiz & Yapı Denetimi</p>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-photo">📐</div>
+        <div class="team-info">
+          <h3>Saha Koordinatörü</h3>
+          <p>Anahtar Teslim Uygulamalar</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     SSS SAYFASI
+═══════════════════════════════════════════ -->
+<section class="faq" id="sss">
+  <div class="page-section">
+    <span class="section-label">SSS</span>
+    <h2 class="section-title">Sık Sorulan Sorular</h2>
+    <p class="section-subtitle">Merak ettiklerinizi derledik.</p>
+    <div class="faq-items">
+      <div class="faq-item">
+        <div class="faq-q">Proje teklifi almak için ne yapmam gerekiyor?</div>
+        <p class="faq-a">Bize telefon, e-posta veya "Teklif Al" butonuyla ulaşabilirsiniz. Projenizin konumu, büyüklüğü ve kapsamı hakkında kısa bir bilgi paylaşmanız yeterli; 24 saat içinde geri dönüş sağlarız.</p>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Ruhsat süreci ne kadar sürer?</div>
+        <p class="faq-a">Belediyeye, yapı tipine ve projenin hazırlık durumuna göre değişmekle birlikte tipik bir mimari ruhsat süreci 2–6 ay arasında tamamlanmaktadır. Sizi süreç boyunca bilgilendiriyoruz.</p>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Anahtar teslim inşaatta hangi işler dahildir?</div>
+        <p class="faq-a">Temel kazısından çatıya, iç mekan boya-badanasından elektrik-sıhhi tesisat tamamlama işlerine kadar yapının yaşanabilir hale getirilmesi için gereken tüm imalatlar kapsama dahildir.</p>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">İstanbul dışındaki projelerde hizmet veriyor musunuz?</div>
+        <p class="faq-a">Evet. Türkiye genelinde statik proje ve mimari tasarım hizmeti verebiliyoruz. Saha gerektiren işler için ise konuma göre değerlendirme yapılmaktadır.</p>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Deprem yönetmeliğine uygunluk kontrolü yapıyor musunuz?</div>
+        <p class="faq-a">Evet. Tüm statik projelerimiz TBDY-2018 (Türkiye Bina Deprem Yönetmeliği) ve ilgili standartlar çerçevesinde hazırlanmakta; mevcut yapılar için deprem performans analizi de yapılmaktadır.</p>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Fizibilite raporu için ne kadar ücret istiyorsunuz?</div>
+        <p class="faq-a">Fizibilite ücretleri projenin ölçeğine ve kapsamına göre belirlenmektedir. Detaylı bilgi için bizimle iletişime geçin; ön değerlendirme görüşmesini ücretsiz yapıyoruz.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- CTA -->
+<section class="cta-section" id="cta">
+  <h2>Projenizi Birlikte Hayata Geçirelim</h2>
+  <p>Mimari, statik ve anahtar teslim ihtiyaçlarınız için uzman ekibimizle tanışın.</p>
+  <a href="mailto:info@oltrearch.com" class="btn-gold">Teklif Alın →</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="logo">OLTRE</span>
+  <div class="footer-divider"></div>
+  <p>
+    📍 Abdurrahmangazi Mah. Bennur Sokak No:17-19 B Blok İç Kapı No:16, Sancaktepe / İstanbul<br>
+    ✉️ <a href="mailto:info@oltrearch.com">info@oltrearch.com</a><br>
+    📞 <a href="tel:+905332811220">+90 533 281 12 20</a> &nbsp;|&nbsp; <a href="tel:+905303090303">+90 530 309 03 03</a>
+  </p>
+  <div class="footer-divider"></div>
+  <p style="font-size:12px; color:#444;">© 2024 OLTRE Mühendislik & Mimarlık. Tüm hakları saklıdır.</p>
+</footer>
+
+</body>
+</html>
